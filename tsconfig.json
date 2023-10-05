@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2022",
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "sourceRoot": "./src",
+    "incremental": true,
+    "skipLibCheck": true, 
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "lib": ["es2022", "dom"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+
+    // strict settings
+    "strict": true,
+    "strictNullChecks": true,
+    "allowUnusedLabels": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": false, // is false bc of some error with next() and other returns 
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true, 
+  },
+}

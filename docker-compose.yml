@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  # Express Server
+  auth-service:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: auth-service:latest
+    container_name: auth-service
+    ports:
+    - '${PORT}:${PORT}' 
+    env_file:
+      - ./.env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD}@mysql:3307/${MYSQL_DATABASE}
+      PORT: 4040
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    command: ["dumb-init", "node", "dist/index.js"]
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - '3307:3306'
+    environment:
+      # ! dont use root user in prod
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    env_file:
+      - ./.env
+    restart: always
+volumes:
+  db-data:
