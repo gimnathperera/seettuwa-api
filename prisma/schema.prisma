@@ -1,69 +1,64 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
 }
 
 model Account {
-  id                String   @id @default(cuid())
-  userId            String
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String?   @map("refresh_token")  
+  access_token      String?   @map("access_token")   
   expiresAt         DateTime
   token_type        String?
   scope             String?
-  id_token          String?  @db.Text
+  id_token          String?   @map("id_token")       
   session_state     String?
+  user User @relation(fields: [userId], references: [id])
+  userId           String @unique @db.ObjectId
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
 }
 
 model User {
-  id                     String                   @id @default(cuid())
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
   name                   String
-  email                  String?                  @unique
+  email                  String?  @unique
   password               String
-  emailVerified          DateTime?
-  createdAt              DateTime                 @default(now())
+  emailVerified           DateTime?
+  createdAt DateTime @default(now())
   accounts               Account[]
   refreshTokens          RefreshToken[]
-  resetToken             ResetToken[]
-  emailVerificationToken EmailVerificationToken[]
+  resetTokens            ResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
 }
 
 model RefreshToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String    @unique
   createdAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String @unique @db.ObjectId
 }
 
 model ResetToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  expiresAt DateTime
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String    @unique
+  expiresAt  DateTime
   createdAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String @unique @db.ObjectId
 }
 
 model EmailVerificationToken {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  expiresAt DateTime
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String    @unique
+  expiresAt  DateTime
   createdAt DateTime @default(now())
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String @unique @db.ObjectId
 }
