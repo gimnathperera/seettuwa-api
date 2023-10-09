@@ -1,21 +1,21 @@
 version: '3.9'
 
 services:
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  # MongoDB
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
     volumes:
-      - db-data:/var/lib/mysql
+      - mongodb-data:/data/db
     ports:
-      - '3307:3306'
+      - '27017:27017'
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_USER: root
-      MYSQL_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
     env_file:
       - ./.env
     restart: always
+
 volumes:
-  db-data:
+  mongodb-data:
