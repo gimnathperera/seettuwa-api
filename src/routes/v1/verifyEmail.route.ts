@@ -4,7 +4,7 @@ import {
   sendVerifyEmailSchema,
   verifyEmailSchema
 } from '../../validations/verifyEmail.validation';
-import * as emailController from '../../controller/verifyEmail.controller';
+import * as emailController from '../../controllers/verifyEmail.controller';
 
 const verifyEmailRouter = Router();
 

@@ -4,7 +4,7 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema
 } from '../../validations/password.validation';
-import * as passwordController from '../../controller/forgotPassword.controller';
+import * as passwordController from '../../controllers/forgotPassword.controller';
 
 const passwordRouter = Router();
 
