@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "tsc --project './tsconfig.build.json' --watch &NODE_ENV=development nodemon --trace-warnings ./dist/index.js",
     "build": "tsc --project './tsconfig.build.json'",
-    "start": "node ./dist/index.js",
+    "start": "npm run build && NODE_ENV=production node --trace-warnings ./dist/index.js",
     "watch": "tsc --project './tsconfig.build.json' --watch",
     "lint": "eslint src/**/*.ts __test__/**/*.test.ts",
     "lint:fix": "eslint --fix --ext .",
